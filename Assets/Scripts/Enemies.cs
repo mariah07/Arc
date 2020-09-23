@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,15 +9,19 @@ using UnityEngine.UIElements;
 public class Enemies : MonoBehaviour
 {
 
-    public float detectplayer = 4f;
+    public float detectplayer;
+
+    public float speed;
 
     private float distance;
+
+    public float health;
 
     public Gun gun;
 
     private Player_Movement thePlayer;
 
-    private Rigidbody rb;
+    private Rigidbody enemy;
 
    // private NavMeshAgent agent;
 
@@ -25,7 +30,7 @@ public class Enemies : MonoBehaviour
     {
         //agent = GetComponent<NavMeshAgent>();
         thePlayer = FindObjectOfType<Player_Movement>();
-        rb = GetComponent<Rigidbody>();
+        enemy = GetComponent<Rigidbody>();
        
     }
 
@@ -45,11 +50,29 @@ public class Enemies : MonoBehaviour
         {
             gun.firing = false;
         }
+
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        enemy.velocity = (transform.forward * speed);
     }
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, detectplayer);
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.transform.tag.Equals("damage")) 
+            {
+                health -= 5;
+            } 
     }
 }
