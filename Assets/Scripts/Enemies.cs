@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -13,26 +14,32 @@ public class Enemies : MonoBehaviour
 
     public Gun gun;
 
-    Transform player;
+    private Player_Movement thePlayer;
 
-    NavMeshAgent agent;
+    private Rigidbody rb;
+
+   // private NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        player = PlayerManager.instance.player.transform;
+        //agent = GetComponent<NavMeshAgent>();
+        thePlayer = FindObjectOfType<Player_Movement>();
+        rb = GetComponent<Rigidbody>();
        
     }
 
     // Update is called once per frame
     void Update()
     {
-        distance = Vector3.Distance(player.position, transform.position);
+        distance = Vector3.Distance(thePlayer.transform.position, transform.position);
+        
 
-        if(distance <= detectplayer)
+        if (distance <= detectplayer)
         {
             gun.firing = true;
+            transform.LookAt(thePlayer.transform.position);
+           
         }
         else
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player_Movement : MonoBehaviour
 {
-    public Rigidbody player;
+    private Rigidbody player;
     private Vector3 minput;
     private Vector3 mvelocity;
 
@@ -20,6 +20,7 @@ public class Player_Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GetComponent<Rigidbody>();
         mainCamera = FindObjectOfType<Camera>();
     }
 
@@ -49,14 +50,14 @@ public class Player_Movement : MonoBehaviour
         {
             gun.firing = false;
         }
-
+        /*
         if (Input.GetKey(KeyCode.Space))
         {
             shield = true;
-        }
+        }*/
 
     }
-
+    /*
     void OnTriggerEnter(Collider col)
     {
         if (shield == true)
@@ -64,7 +65,7 @@ public class Player_Movement : MonoBehaviour
             direction = (-col.attachedRigidbody.velocity);
             col.attachedRigidbody.velocity = direction;
         }
-    }
+    }*/
 
 
     void FixedUpdate()
